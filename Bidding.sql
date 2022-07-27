@@ -3,164 +3,164 @@
 BEGIN;
 
 
-CREATE TABLE IF NOT EXISTS public." Admin"
+CREATE TABLE IF NOT EXISTS public." admin"
 (
-	"ID" integer NOT NULL,
-	first_name "char" NOT NULL,
-	last_name "char" NOT NULL,
-	phone_no integer NOT NULL,
-	PRIMARY KEY ("ID")
+    "ID" integer NOT NULL,
+    first_name "char" NOT NULL,
+    last_name "char" NOT NULL,
+    phone_no integer NOT NULL,
+    PRIMARY KEY ("ID")
 );
 
-CREATE TABLE IF NOT EXISTS public."Address"
+CREATE TABLE IF NOT EXISTS public.address
 (
-	id integer NOT NULL,
-	"street_Name" "char" NOT NULL,
-	"zip_Code" integer NOT NULL
+    id integer NOT NULL,
+    "street_Name" "char" NOT NULL,
+    "zip_Code" integer NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS public."Bidder"
+CREATE TABLE IF NOT EXISTS public.bidder
 (
-	"first_Name" "char" NOT NULL,
-	"last_Name" "char" NOT NULL,
-	"phone_No" integer NOT NULL,
-	email_id character varying NOT NULL,
-	"bidder_Id" integer NOT NULL,
-	PRIMARY KEY ("bidder_Id")
+    "first_Name" "char" NOT NULL,
+    "last_Name" "char" NOT NULL,
+    "phone_No" integer NOT NULL,
+    email_id character varying NOT NULL,
+    "bidder_Id" integer NOT NULL,
+    PRIMARY KEY ("bidder_Id")
 );
 
-CREATE TABLE IF NOT EXISTS public."BAddress"
+CREATE TABLE IF NOT EXISTS public.bidder_address
 (
-	"ID" integer NOT NULL,
-	"street_Name" "char" NOT NULL,
-	country "char" NOT NULL,
-	PRIMARY KEY ("ID")
+    "ID" integer NOT NULL,
+    "street_Name" "char" NOT NULL,
+    country "char" NOT NULL,
+    PRIMARY KEY ("ID")
 );
 
-CREATE TABLE IF NOT EXISTS public."Bid"
+CREATE TABLE IF NOT EXISTS public.bid
 (
-	"ID" integer NOT NULL,
-	"item_Id" integer NOT NULL,
-	"starting_Price" integer NOT NULL,
-	date date NOT NULL,
-	"time" time with time zone,
-	PRIMARY KEY ("ID")
+    "ID" integer NOT NULL,
+    "item_Id" integer NOT NULL,
+    "starting_Price" integer NOT NULL,
+    date date NOT NULL,
+    "time" time with time zone,
+    PRIMARY KEY ("ID")
 );
 
-CREATE TABLE IF NOT EXISTS public."Auction"
+CREATE TABLE IF NOT EXISTS public.auction
 (
-	"ID" integer NOT NULL,
-	"start_Date" timestamp with time zone NOT NULL,
-	"close_Date" timestamp with time zone,
-	PRIMARY KEY ("ID")
+    "ID" integer NOT NULL,
+    "start_Date" timestamp with time zone NOT NULL,
+    "close_Date" timestamp with time zone,
+    PRIMARY KEY ("ID")
 );
 
-CREATE TABLE IF NOT EXISTS public."Product"
+CREATE TABLE IF NOT EXISTS public.product
 (
-	"ID" "char" NOT NULL,
-	name "char" NOT NULL,
-	description character varying NOT NULL,
-	start_bid_price integer NOT NULL,
-	"min_Bid_increment" integer NOT NULL,
-	category_id integer NOT NULL,
-	"seller_Id" integer NOT NULL,
-	PRIMARY KEY ("ID")
+    "ID" "char" NOT NULL,
+    name "char" NOT NULL,
+    description character varying NOT NULL,
+    start_bid_price integer NOT NULL,
+    "min_Bid_increment" integer NOT NULL,
+    category_id integer NOT NULL,
+    "seller_Id" integer NOT NULL,
+    PRIMARY KEY ("ID")
 );
 
-CREATE TABLE IF NOT EXISTS public."Shipment"
+CREATE TABLE IF NOT EXISTS public.shipment
 (
-	expected_date date NOT NULL,
-	"actual_Date" date
+    expected_date date NOT NULL,
+    "actual_Date" date
 );
 
-CREATE TABLE IF NOT EXISTS public."Catrgory"
+CREATE TABLE IF NOT EXISTS public.category
 (
-	"category_Name" "char" NOT NULL
+    "category_Name" "char" NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS public."Payment "
+CREATE TABLE IF NOT EXISTS public."payment "
 (
-	"payment_Method" character varying NOT NULL,
-	description "char" NOT NULL
+    "payment_Method" character varying NOT NULL,
+    description "char" NOT NULL
 );
 
-ALTER TABLE IF EXISTS public."Address"
-	ADD CONSTRAINT "admin_ ID" FOREIGN KEY (id)
-	REFERENCES public." Admin" ("ID") MATCH SIMPLE
-	ON UPDATE NO ACTION
-	ON DELETE NO ACTION
-	NOT VALID;
+ALTER TABLE IF EXISTS public.address
+    ADD CONSTRAINT "admin_ ID" FOREIGN KEY (id)
+    REFERENCES public." admin" ("ID") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
 
 
-ALTER TABLE IF EXISTS public."Bidder"
-	ADD CONSTRAINT "admin_Id" FOREIGN KEY ("first_Name")
-	REFERENCES public." Admin" ("ID") MATCH SIMPLE
-	ON UPDATE NO ACTION
-	ON DELETE NO ACTION
-	NOT VALID;
+ALTER TABLE IF EXISTS public.bidder
+    ADD CONSTRAINT "admin_Id" FOREIGN KEY ("first_Name")
+    REFERENCES public." admin" ("ID") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
 
 
-ALTER TABLE IF EXISTS public."BAddress"
-	ADD CONSTRAINT "Bidder_Id" FOREIGN KEY ("ID")
-	REFERENCES public."Bidder" ("bidder_Id") MATCH SIMPLE
-	ON UPDATE NO ACTION
-	ON DELETE NO ACTION
-	NOT VALID;
+ALTER TABLE IF EXISTS public.bidder_address
+    ADD CONSTRAINT "Bidder_Id" FOREIGN KEY ("ID")
+    REFERENCES public.bidder ("bidder_Id") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
 
 
-ALTER TABLE IF EXISTS public."Bid"
-	ADD CONSTRAINT "Bidder_id" FOREIGN KEY ("item_Id")
-	REFERENCES public."Bidder" ("bidder_Id") MATCH SIMPLE
-	ON UPDATE NO ACTION
-	ON DELETE NO ACTION
-	NOT VALID;
+ALTER TABLE IF EXISTS public.bid
+    ADD CONSTRAINT "Bidder_id" FOREIGN KEY ("item_Id")
+    REFERENCES public.bidder ("bidder_Id") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
 
 
-ALTER TABLE IF EXISTS public."Auction"
-	ADD CONSTRAINT item_id FOREIGN KEY ("ID")
-	REFERENCES public."Bid" ("item_Id") MATCH SIMPLE
-	ON UPDATE NO ACTION
-	ON DELETE NO ACTION
-	NOT VALID;
+ALTER TABLE IF EXISTS public.auction
+    ADD CONSTRAINT item_id FOREIGN KEY ("ID")
+    REFERENCES public.bid ("item_Id") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
 
 
-ALTER TABLE IF EXISTS public."Auction"
-	ADD CONSTRAINT "Admin_id" FOREIGN KEY ("ID")
-	REFERENCES public." Admin" ("ID") MATCH SIMPLE
-	ON UPDATE NO ACTION
-	ON DELETE NO ACTION
-	NOT VALID;
+ALTER TABLE IF EXISTS public.auction
+    ADD CONSTRAINT "Admin_id" FOREIGN KEY ("ID")
+    REFERENCES public." admin" ("ID") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
 
 
-ALTER TABLE IF EXISTS public."Product"
-	ADD CONSTRAINT "item_Id" FOREIGN KEY ("ID")
-	REFERENCES public."Bid" ("item_Id") MATCH SIMPLE
-	ON UPDATE NO ACTION
-	ON DELETE NO ACTION
-	NOT VALID;
+ALTER TABLE IF EXISTS public.product
+    ADD CONSTRAINT "item_Id" FOREIGN KEY ("ID")
+    REFERENCES public.bid ("item_Id") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
 
 
-ALTER TABLE IF EXISTS public."Shipment"
-	ADD CONSTRAINT "Item_Id" FOREIGN KEY ("actual_Date")
-	REFERENCES public."Bid" ("item_Id") MATCH SIMPLE
-	ON UPDATE NO ACTION
-	ON DELETE NO ACTION
-	NOT VALID;
+ALTER TABLE IF EXISTS public.shipment
+    ADD CONSTRAINT "Item_Id" FOREIGN KEY ("actual_Date")
+    REFERENCES public.bid ("item_Id") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
 
 
-ALTER TABLE IF EXISTS public."Catrgory"
-	ADD CONSTRAINT "Category_Id" FOREIGN KEY ("category_Name")
-	REFERENCES public."Product" (category_id) MATCH SIMPLE
-	ON UPDATE NO ACTION
-	ON DELETE NO ACTION
-	NOT VALID;
+ALTER TABLE IF EXISTS public.category
+    ADD CONSTRAINT "Category_Id" FOREIGN KEY ("category_Name")
+    REFERENCES public.product (category_id) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
 
 
-ALTER TABLE IF EXISTS public."Payment "
-	ADD CONSTRAINT "auction_Id" FOREIGN KEY ("payment_Method")
-	REFERENCES public."Auction" ("ID") MATCH SIMPLE
-	ON UPDATE NO ACTION
-	ON DELETE NO ACTION
-	NOT VALID;
+ALTER TABLE IF EXISTS public."payment "
+    ADD CONSTRAINT "auction_Id" FOREIGN KEY ("payment_Method")
+    REFERENCES public.auction ("ID") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
 
 END;
